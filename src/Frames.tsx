@@ -41,6 +41,10 @@ const Frames = (props: FramesProps) => {
     setState(newState);
   }
   
+  const loadState = async () => {
+    return state;
+  }
+  
   const submitCard = async () => {
     try {
       log(
