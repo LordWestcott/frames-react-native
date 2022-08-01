@@ -14,6 +14,8 @@ export const FramesContext = React.createContext({} as FramesContextType);
 
 const Frames = (props: FramesProps) => {
   // @ts-ignore
+  
+  
   const [state, dispatch]: [FramesState, FramesDispatch] = React.useReducer(
     framesReducer,
     {
@@ -35,7 +37,10 @@ const Frames = (props: FramesProps) => {
       },
     }
   );
-
+  const setNewState = async (newState) => {
+    setState(newState);
+  }
+  
   const submitCard = async () => {
     try {
       log(
