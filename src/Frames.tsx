@@ -37,9 +37,39 @@ const Frames = (props: FramesProps) => {
       },
     }
   );
-  const setNewState = async (newState) => {
-    setState(newState);
-  }
+  
+   useEffect(function () {
+        //console.log('UPDATING STATE');
+        //console.log(state);
+        //console.log(props.newState);
+        if(props.newState!=null){
+            //state = props.newState;
+            state.cardNumber = props.newState.cardNumber;
+            state.expiryDate = props.newState.expiryDate;
+            state.cvv = props.newState.cvv;
+            if(props.newState.cardNumber!=null){
+                //React.useReducer(framesReducer, props.newState)
+            }
+
+            setTimeout(function(){
+                if(props.newState.cardNumber!=null){
+                   dispatch({ type: CARD_CHANGE, payload: props.newState.cardNumber });
+                }
+                if(props.newState.expiryDate!=null){
+                    dispatch({ type: DATE_CHANGE, payload: props.newState.expiryDate });
+                }
+                if(props.newState.cvv!=null){
+                    dispatch({ type: CVV_CHANGE, payload: props.newState.cvv });
+                }
+            },1000)
+        }
+    }, [state]);
+  
+  var reloadFrameState = async(newState)=>{
+        state = newState;
+    }
+  
+ 
   
   const loadState = async () => {
     return state;
@@ -165,7 +195,7 @@ const Frames = (props: FramesProps) => {
 
   return (
     <View style={[styles.container, props.style]}>
-      <FramesContext.Provider value={{ state, dispatch, submitCard }}>
+      <FramesContext.Provider value={{ state, dispatch, submitCard,reloadFrameState }}>
         {props.children}
       </FramesContext.Provider>
     </View>
