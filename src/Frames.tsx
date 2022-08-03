@@ -35,35 +35,21 @@ const Frames = (props: FramesProps) => {
         cvv: false,
         card: false,
       },
+      newState:null,
     }
   );
   
-   useEffect(function () {
-        //console.log('UPDATING STATE');
-        //console.log(state);
-        //console.log(props.newState);
+   useEffect(function  () {
         if(props.newState!=null){
-            //state = props.newState;
             state.cardNumber = props.newState.cardNumber;
             state.expiryDate = props.newState.expiryDate;
-            state.cvv = props.newState.cvv;
+            state.cardBin = props.newState.cardBin;
             if(props.newState.cardNumber!=null){
-                //React.useReducer(framesReducer, props.newState)
+                dispatch({ type: CARD_CHANGE, payload: props.newState.cardNumber });
+                submitCard();
             }
-
-            setTimeout(function(){
-                if(props.newState.cardNumber!=null){
-                   dispatch({ type: CARD_CHANGE, payload: props.newState.cardNumber });
-                }
-                if(props.newState.expiryDate!=null){
-                    dispatch({ type: DATE_CHANGE, payload: props.newState.expiryDate });
-                }
-                if(props.newState.cvv!=null){
-                    dispatch({ type: CVV_CHANGE, payload: props.newState.cvv });
-                }
-            },1000)
         }
-    }, [state]);
+   }, [state.cardNumber, state.expiryDate,state.cardBin]);
   
   var reloadFrameState = async(newState)=>{
         state = newState;
